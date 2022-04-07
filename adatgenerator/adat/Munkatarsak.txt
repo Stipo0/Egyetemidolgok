@@ -1,0 +1,5 @@
+INSERT INTO Munkatarsak VALUES ('0', 'Molnár Dávid', '06300948824', '1')
+INSERT INTO Munkatarsak VALUES ('1', 'Kovács Viktória', '06201152761', '0')
+INSERT INTO Munkatarsak VALUES ('2', 'Szabó Bence', '06302168576', '1')
+INSERT INTO Munkatarsak VALUES ('3', 'Farkas Alexandra', '06307954312', '1')
+INSERT INTO Munkatarsak VALUES ('4', 'Horváth Máté', '06201387427', '1')
