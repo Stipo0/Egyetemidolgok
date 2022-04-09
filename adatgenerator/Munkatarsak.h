@@ -37,25 +37,20 @@ Munkatarsak munkatars_generate(int id) {
 		{
 			munkatars.Telefonszam += ((rand() % 10) + '0');
 		}
-	munkatars.munkaviszony = rand() % 2; 
+	munkatars.munkaviszony = 1; 
 
 	return munkatars;
 };
 
 
 //SQL -nek megfelelõ formázás//
-void munkatars_print(Munkatarsak munkatars,bool utolso) {
+void munkatars_print(std::ofstream &File, Munkatarsak munkatars) {
 
-	std::ofstream File("adat/Munkatarsak.txt", std::ios::app);
-
-	File << "INSERT INTO Munkatarsak VALUES ('" 
-		<< munkatars.Munkatars_ID 
-		<< "', '" << munkatars.Nev 
-		<< "', '" << munkatars.Telefonszam 
-		<< "', '" << munkatars.munkaviszony 
-		<< "')" << std::endl;
-
-	if (utolso == 1) { File.close();}
+	File << "INSERT [Munkatarsak] ([Munkatars_ID], [Nev], [Telefonszam], [MunkaViszony]) VALUES ("
+		<< munkatars.Munkatars_ID << ", N'" << munkatars.Nev << "', N'" << munkatars.Telefonszam << "', " << munkatars.munkaviszony << ")"
+		<< std::endl
+		<< "GO"
+		<< std::endl;
 }
 
 
@@ -63,9 +58,8 @@ void munkatars_print(Munkatarsak munkatars,bool utolso) {
 bool munkatars_hasonlit(Munkatarsak a, Munkatarsak b) {
 
 	bool ertek = 0;
-	if (a.Nev == b.Nev) return 1;
-	if (a.Telefonszam == b.Telefonszam) return 1;
-	return 0;
+	if ((a.Nev == b.Nev) or (a.Telefonszam == b.Telefonszam)) { return 1; }
+	 else { return 0; }
 
 }
 
@@ -84,11 +78,26 @@ void munkatars_start(Munkatarsak munkatarsak[],int db) {
 		};
 	}
 
-	for (int i = 0; i < db - 1; i++)
+	std::ofstream File("adat/Munkatarsak.txt", std::ios::app);
+
+	File << "USE [Mezogazdasag]" 
+		 << std::endl 
+		 << "GO" 
+		 << std::endl 
+		 << "SET IDENTITY_INSERT [Munkatarsak] ON " 
+		 << std::endl 
+		 << "GO" 
+		 << std::endl;
+
+	for (int i = 0; i < db; i++)
 	{
-		munkatars_print(munkatarsak[i], 0);
+		munkatars_print(File, munkatarsak[i]);
 	}
 
-	munkatars_print(munkatarsak[db - 1], 1);
-}
+	File << "SET IDENTITY_INSERT [Munkatarsak] OFF" 
+		 << std::endl 
+		 << "GO"
+		 << std::endl;
 
+	File.close();
+}
