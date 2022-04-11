@@ -34,8 +34,8 @@ Foldek fold_generate(int id) {
 			fold.HelyrajziSzam += ((rand() % 6 + 1) + '0');
 		}
 
-	fold.AranyKorona = (rand() % 4 + 3);
-	fold.Meret = ((rand() % 10 + 1) + ((rand() % 89 + 10) / 100));
+	fold.AranyKorona = (rand() % 15 + 14);
+	fold.Meret = ((rand() % 10 + 1) + ((rand() % 89 + 10) / 100.0));
 	fold.Tulajdon = rand() % 2;
 
 	return fold;
